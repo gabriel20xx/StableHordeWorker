@@ -28,7 +28,7 @@ ENV HR_UPSCALER=""
 ENV HIRES_FIRSTPHASE_RESOLUTION=""
 RUN apt update && \
 	apt upgrade -y && \
-	apt install wget git python3 python3-venv libgl1 libglib2.0-0 screen jq -y
+	apt install wget git python3 python3-venv libgl1 libglib2.0-0 libtcmalloc-minimal4 screen jq -y
 RUN useradd -ms /bin/bash user
 
 # Stage 2: Prepare Stable Diffusion
@@ -40,7 +40,7 @@ RUN chown user:user stable-diffusion-webui/webui.sh
 
 # Stage 3: Prepare Horde Worker
 WORKDIR /home/user/stable-diffusion-webui/extensions
-RUN git clone https://github.com/sdwebui-w-horde/sd-webui-stable-horde-worker.git
+RUN git clone https://github.com/gabriel20xx/sd-webui-stable-horde-worker.git -b gabriel20xx-save-first
 
 # Stage 4: Prepare Start Script
 WORKDIR /app
