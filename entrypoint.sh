@@ -2,7 +2,7 @@
 
 echo "Starting entrypoint script"
 
-# Initializing values
+# Initializing environment values
 REPOSITORY="${REPOSITORY:-https://github.com/gabriel20xx/sd-webui-stable-horde-worker.git}"
 BRANCH="${BRANCH:-master}"
 ENABLED="${ENABLED:-yes}"
@@ -23,23 +23,21 @@ NSFW="${NSFW:-yes}"
 HR_UPSCALER="${HR_UPSCALER:-latent}"
 HIRES_FIRSTPHASE_RESOLUTION="${HIRES_FIRSTPHASE_RESOLUTION:-1048576}"
 
-#[ -z "$REPOSITORY" ] && REPOSITORY="none"
-#[ -z "$BRANCH" ] && BRANCH="none"
-
-echo "Repository: " $REPOSITORY
-echo "Branch: " $BRANCH
-
-cd /home/user/stable-diffusion-webui/extensions
-
-echo "Cloning repository.."
-git clone "$REPOSITORY" -b "$BRANCH"
-echo "Repository cloned"
-
+# Initialize internal values
 MODEL_DIR="/home/user/models/"
 SAVE_IMAGES_FOLDER="/home/user/horde/"
 
-cd /home/user/stable-diffusion-webui/extensions/sd-webui-stable-horde-worker
+# Clone repository
+echo "\nRepository: " $REPOSITORY
+echo "Branch: " $BRANCH
+echo "\nCloning repository.."
+cd /home/user/stable-diffusion-webui/extensions
+git clone "$REPOSITORY" -b "$BRANCH"
+echo "Repository cloned"
 
+# List models
+echo "\nThe following files are in the provided folder:"
+cd /home/user/stable-diffusion-webui/extensions/sd-webui-stable-horde-worker
 ls $MODEL_DIR
 
 # For Horde
@@ -74,26 +72,6 @@ add_to_config() {
     esac
   fi
 }
-
-# Initialize environment variables with default values only if they are not set
-#[ -z "$ENABLED" ] && ENABLED="none"
-#[ -z "$ALLOW_IMG2IMG" ] && ALLOW_IMG2IMG="none"
-#[ -z "$ALLOW_PAINTING" ] && ALLOW_PAINTING="none"
-#[ -z "$ALLOW_UNSAFE_IPADDR" ] && ALLOW_UNSAFE_IPADDR="none"
-#[ -z "$ALLOW_POST_PROCESSING" ] && ALLOW_POST_PROCESSING="none"
-#[ -z "$RESTORE_SETTINGS" ] && RESTORE_SETTINGS="none"
-#[ -z "$SHOW_IMAGE_PREVIEW" ] && SHOW_IMAGE_PREVIEW="none"
-#[ -z "$SAVE_IMAGES" ] && SAVE_IMAGES="none"
-#[ -z "$SAVE_IMAGES_FOLDER" ] && SAVE_IMAGES_FOLDER="none"
-#[ -z "$ENDPOINT" ] && ENDPOINT="none"
-#[ -z "$APIKEY" ] && APIKEY="none"
-#[ -z "$NAME" ] && NAME="none"
-#[ -z "$INTERVAL" ] && INTERVAL="none"
-#[ -z "$MAX_PIXELS" ] && MAX_PIXELS="none"
-#[ -z "$NSFW" ] && NSFW="none"
-#[ -z "$HR_UPSCALER" ] && HR_UPSCALER="none"
-#[ -z "$HIRES_FIRSTPHASE_RESOLUTION" ] && HIRES_FIRSTPHASE_RESOLUTION="none"
-
 
 # Specify the type for each environment variable and add to the config JSON
 # Format: add_to_config "KEY" "VALUE" "TYPE"
@@ -134,12 +112,12 @@ done
 config_json=$(jq --argjson current_models "$models_json" '. + { "current_models": $current_models }' <<< "$config_json")
 
 # Save the config to a file
+echo "\nSaving the following config config...:"
 echo "$config_json" > config.json
-
 cat config.json
-
-echo "Entrypoint script finished, starting webui.sh ..."
+echo "Config saved"
 
 # Run webui.sh
+echo "\nEntrypoint script finished, starting webui.sh ..."
 cd /home/user/stable-diffusion-webui
 ./webui.sh --ckpt-dir "$MODEL_DIR" $COMMANDLINE_ARGS
