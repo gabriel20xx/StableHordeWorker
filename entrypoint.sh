@@ -60,6 +60,12 @@ add_to_config() {
 [ -z "$NSFW" ] && NSFW="none"
 [ -z "$HR_UPSCALER" ] && HR_UPSCALER="none"
 [ -z "$HIRES_FIRSTPHASE_RESOLUTION" ] && HIRES_FIRSTPHASE_RESOLUTION="none"
+[ -z "$REPOSITORY" ] && REPOSITORY="none"
+[ -z "$BRANCH" ] && BRANCH="none"
+
+echo "Repository: " $REPOSITORY
+echo "Branch: " $BRANCH
+
 
 # Specify the type for each environment variable and add to the config JSON
 # Format: add_to_config "KEY" "VALUE" "TYPE"
