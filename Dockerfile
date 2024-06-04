@@ -28,8 +28,8 @@ ENV HR_UPSCALER=""
 ENV HIRES_FIRSTPHASE_RESOLUTION=""
 
 # From GitHub
-ENV REPOSITORY=https://github.com/gabriel20xx/sd-webui-stable-horde-worker.git
-ENV BRANCH=master
+# ENV REPOSITORY=https://github.com/gabriel20xx/sd-webui-stable-horde-worker.git
+# ENV BRANCH=attempt2
 
 RUN apt update && \
 	apt upgrade -y && \
@@ -44,8 +44,8 @@ RUN chmod +x stable-diffusion-webui/webui.sh
 RUN chown user:user stable-diffusion-webui/webui.sh
 
 # Stage 3: Prepare Horde Worker
-WORKDIR /home/user/stable-diffusion-webui/extensions
-RUN git clone "$REPOSITORY" -b "$BRANCH"
+# WORKDIR /home/user/stable-diffusion-webui/extensions
+# RUN git clone "$REPOSITORY" -b "$BRANCH"
 
 # Stage 4: Prepare Start Script
 WORKDIR /app
