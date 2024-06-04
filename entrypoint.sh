@@ -2,14 +2,38 @@
 
 echo "Starting entrypoint script"
 
-[ -z "$REPOSITORY" ] && REPOSITORY="none"
-[ -z "$BRANCH" ] && BRANCH="none"
+# Initializing values
+REPOSITORY="${REPOSITORY:-https://github.com/gabriel20xx/sd-webui-stable-horde-worker.git}"
+BRANCH="${BRANCH:-master}"
+ENABLED="${ENABLED:-yes}"
+ALLOW_IMG2IMG="${ALLOW_IMG2IMG:-yes}"
+ALLOW_PAINTING="${ALLOW_PAINTING:-yes}"
+ALLOW_UNSAFE_IPADDR="${ALLOW_UNSAFE_IPADDR:-yes}"
+ALLOW_POST_PROCESSING="${ALLOW_POST_PROCESSING:-yes}"
+RESTORE_SETTINGS="${RESTORE_SETTINGS:-yes}"
+SHOW_IMAGE_PREVIEW="${SHOW_IMAGE_PREVIEW:-yes}"
+SAVE_IMAGES="${SAVE_IMAGES:-yes}"
+SAVE_IMAGES_FOLDER="${SAVE_IMAGES_FOLDER:-none}"
+ENDPOINT="${ENDPOINT:-http://stablehorde.net/}"
+APIKEY="${APIKEY:-none}"
+NAME="${NAME:-none}"
+INTERVAL="${INTERVAL:-5}"
+MAX_PIXELS="${MAX_PIXELS:-1048576}"
+NSFW="${NSFW:-yes}"
+HR_UPSCALER="${HR_UPSCALER:-latent}"
+HIRES_FIRSTPHASE_RESOLUTION="${HIRES_FIRSTPHASE_RESOLUTION:-1048576}"
+
+#[ -z "$REPOSITORY" ] && REPOSITORY="none"
+#[ -z "$BRANCH" ] && BRANCH="none"
 
 echo "Repository: " $REPOSITORY
 echo "Branch: " $BRANCH
 
 cd /home/user/stable-diffusion-webui/extensions
+
+echo "Cloning repository.."
 git clone "$REPOSITORY" -b "$BRANCH"
+echo "Repository cloned"
 
 MODEL_DIR="/home/user/models/"
 SAVE_IMAGES_FOLDER="/home/user/horde/"
@@ -52,23 +76,23 @@ add_to_config() {
 }
 
 # Initialize environment variables with default values only if they are not set
-[ -z "$ENABLED" ] && ENABLED="none"
-[ -z "$ALLOW_IMG2IMG" ] && ALLOW_IMG2IMG="none"
-[ -z "$ALLOW_PAINTING" ] && ALLOW_PAINTING="none"
-[ -z "$ALLOW_UNSAFE_IPADDR" ] && ALLOW_UNSAFE_IPADDR="none"
-[ -z "$ALLOW_POST_PROCESSING" ] && ALLOW_POST_PROCESSING="none"
-[ -z "$RESTORE_SETTINGS" ] && RESTORE_SETTINGS="none"
-[ -z "$SHOW_IMAGE_PREVIEW" ] && SHOW_IMAGE_PREVIEW="none"
-[ -z "$SAVE_IMAGES" ] && SAVE_IMAGES="none"
-[ -z "$SAVE_IMAGES_FOLDER" ] && SAVE_IMAGES_FOLDER="none"
-[ -z "$ENDPOINT" ] && ENDPOINT="none"
-[ -z "$APIKEY" ] && APIKEY="none"
-[ -z "$NAME" ] && NAME="none"
-[ -z "$INTERVAL" ] && INTERVAL="none"
-[ -z "$MAX_PIXELS" ] && MAX_PIXELS="none"
-[ -z "$NSFW" ] && NSFW="none"
-[ -z "$HR_UPSCALER" ] && HR_UPSCALER="none"
-[ -z "$HIRES_FIRSTPHASE_RESOLUTION" ] && HIRES_FIRSTPHASE_RESOLUTION="none"
+#[ -z "$ENABLED" ] && ENABLED="none"
+#[ -z "$ALLOW_IMG2IMG" ] && ALLOW_IMG2IMG="none"
+#[ -z "$ALLOW_PAINTING" ] && ALLOW_PAINTING="none"
+#[ -z "$ALLOW_UNSAFE_IPADDR" ] && ALLOW_UNSAFE_IPADDR="none"
+#[ -z "$ALLOW_POST_PROCESSING" ] && ALLOW_POST_PROCESSING="none"
+#[ -z "$RESTORE_SETTINGS" ] && RESTORE_SETTINGS="none"
+#[ -z "$SHOW_IMAGE_PREVIEW" ] && SHOW_IMAGE_PREVIEW="none"
+#[ -z "$SAVE_IMAGES" ] && SAVE_IMAGES="none"
+#[ -z "$SAVE_IMAGES_FOLDER" ] && SAVE_IMAGES_FOLDER="none"
+#[ -z "$ENDPOINT" ] && ENDPOINT="none"
+#[ -z "$APIKEY" ] && APIKEY="none"
+#[ -z "$NAME" ] && NAME="none"
+#[ -z "$INTERVAL" ] && INTERVAL="none"
+#[ -z "$MAX_PIXELS" ] && MAX_PIXELS="none"
+#[ -z "$NSFW" ] && NSFW="none"
+#[ -z "$HR_UPSCALER" ] && HR_UPSCALER="none"
+#[ -z "$HIRES_FIRSTPHASE_RESOLUTION" ] && HIRES_FIRSTPHASE_RESOLUTION="none"
 
 
 # Specify the type for each environment variable and add to the config JSON

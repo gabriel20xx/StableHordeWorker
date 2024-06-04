@@ -6,6 +6,10 @@ WORKDIR /app
 ENV NVIDIA_VISIBLE_DEVICES="all"
 ENV NVIDIA_DRIVER_CAPABILITIES="all"
 
+# From GitHub
+ENV REPOSITORY=""
+ENV BRANCH=""
+
 # From Stable Diffusion
 ENV COMMANDLINE_ARGS=""
 
@@ -27,10 +31,6 @@ ENV NSFW=""
 ENV HR_UPSCALER=""
 ENV HIRES_FIRSTPHASE_RESOLUTION=""
 
-# From GitHub
-# ENV REPOSITORY=https://github.com/gabriel20xx/sd-webui-stable-horde-worker.git
-# ENV BRANCH=attempt2
-
 RUN apt update && \
 	apt upgrade -y && \
 	apt install wget git python3 python3-venv libgl1 libglib2.0-0 libtcmalloc-minimal4 screen jq -y
@@ -43,7 +43,7 @@ RUN git clone https://github.com/AUTOMATIC1111/stable-diffusion-webui.git
 RUN chmod +x stable-diffusion-webui/webui.sh
 RUN chown user:user stable-diffusion-webui/webui.sh
 
-# Stage 3: Prepare Horde Worker
+# Stage 3: Prepare Horde Worker -> Will be done in entrypoint.sh
 # WORKDIR /home/user/stable-diffusion-webui/extensions
 # RUN git clone "$REPOSITORY" -b "$BRANCH"
 
